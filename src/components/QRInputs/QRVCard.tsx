@@ -29,7 +29,8 @@ END:VCARD`;
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="flex flex-col">
+      <div className="grid grid-cols-2 gap-2 mb-4">
         <input
           type="text"
           placeholder="First Name"
@@ -44,14 +45,14 @@ END:VCARD`;
           onChange={(e) => setLastName(e.target.value)}
           className="border p-2 rounded w-full"
         />
-      </div>
+    
 
       <input
         type="text"
         placeholder="Organization"
         value={organization}
         onChange={(e) => setOrganization(e.target.value)}
-        className="border p-2 rounded w-80 mt-2"
+        className="border p-2 rounded w-full"
       />
 
       <input
@@ -59,7 +60,7 @@ END:VCARD`;
         placeholder="Phone Number"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-        className="border p-2 rounded w-80 mt-2"
+        className="border p-2 rounded w-full"
       />
 
       <input
@@ -67,7 +68,7 @@ END:VCARD`;
         placeholder="Email Address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 rounded w-80 mt-2"
+        className="border p-2 rounded w-full"
       />
 
       <input
@@ -75,12 +76,13 @@ END:VCARD`;
         placeholder="Website (Optional)"
         value={website}
         onChange={(e) => setWebsite(e.target.value)}
-        className="border p-2 rounded w-80 mt-2 mb-4"
+        className="border p-2 rounded w-full"
       />
-
+  </div>
       <Button onClick={handleGenerate} variant="primary">
         Generate QR Code
       </Button>
+      </div>
     </>
   );
 }

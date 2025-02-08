@@ -12,12 +12,13 @@ export default function QREmail({ onGenerate }: QREmailProps) {
 
   return (
     <>
+    <div className="flex flex-col w-full">
       <input
         type="email"
         placeholder="Enter recipient email..."
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 rounded w-80 mb-2"
+        className="border p-2 rounded w-full mb-2"
       />
 
       <input
@@ -25,14 +26,14 @@ export default function QREmail({ onGenerate }: QREmailProps) {
         placeholder="Enter subject..."
         value={subject}
         onChange={(e) => setSubject(e.target.value)}
-        className="border p-2 rounded w-80 mb-2"
+        className="border p-2 rounded w-full mb-2"
       />
 
       <textarea
         placeholder="Enter email body..."
         value={body}
         onChange={(e) => setBody(e.target.value)}
-        className="border p-2 rounded w-80 h-24 mb-4"
+        className="border p-2 rounded w-full h-24 mb-4"
       />
 
       <Button
@@ -41,6 +42,7 @@ export default function QREmail({ onGenerate }: QREmailProps) {
       >
         Generate QR Code
       </Button>
+      </div>
     </>
   );
 }

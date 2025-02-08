@@ -78,7 +78,7 @@ export default function Page() {
     <div className="min-h-screen flex flex-col items-center p-4">
       <div className="container grid grid-cols-1 md:grid-cols-[2fr_1fr] white-card">
         {/* Right Side (QR Generator Form) */}
-        <div className="p-6 gray-bg">
+        <div className="p-6 gray-bg border rounded">
           <QRGenerator onGenerate={setQrData} onUpload={setUploadedSVG} />
         </div>
 

@@ -87,6 +87,7 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: var(--spacing-md);
 }
 
 .white-card {
@@ -94,6 +95,7 @@ body {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-md);
   border: var(--border-width) solid var(--color-border);
+  overflow: hidden;
 }
 
 .gray-bg {
@@ -177,9 +179,4 @@ background-color: var(--color-background);
 }
 
 
-/* Responsive */
-@media (max-width: 768px) {
-  .container {
-    padding: var(--spacing-md);
-  }
-}
+

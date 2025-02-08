@@ -21,17 +21,19 @@ export default function QRUrl({ onGenerate }: QRUrlProps) {
 
   return (
     <>
+    <div className="flex flex-col">
       <input
         type="url"
         placeholder="Enter URL (https://example.com)"
         value={url}
         onChange={(e) => setUrl(e.target.value)}
-        className="border p-2 rounded w-80 mb-4"
+        className="border p-2 rounded w-full mb-4"
       />
 
       <Button onClick={handleGenerate} variant="primary">
         Generate QR Code
       </Button>
+      </div>
     </>
   );
 }

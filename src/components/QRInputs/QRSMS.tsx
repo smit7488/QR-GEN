@@ -12,6 +12,7 @@ export default function QRSMS({ onGenerate }: QRSMSProps) {
 
   return (
     <>
+    <div className="flex flex-col">
       <div className="flex gap-2 mb-2">
         <select
           value={countryCode}
@@ -27,7 +28,7 @@ export default function QRSMS({ onGenerate }: QRSMSProps) {
           placeholder="Enter phone number..."
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="border p-2 rounded w-60"
+          className="border p-2 rounded w-full"
         />
       </div>
 
@@ -35,7 +36,7 @@ export default function QRSMS({ onGenerate }: QRSMSProps) {
         placeholder="Enter message..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="border p-2 rounded w-80 h-24 mb-4"
+        className="border p-2 rounded w-full h-24 mb-4"
       />
 
       <Button
@@ -44,6 +45,7 @@ export default function QRSMS({ onGenerate }: QRSMSProps) {
       >
         Generate QR Code
       </Button>
+      </div>
     </>
   );
 }
