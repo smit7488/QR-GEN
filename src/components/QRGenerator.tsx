@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Button from ".//Button";
+import Card from ".//Card";
 
 interface QRGeneratorProps {
   onGenerate: (text: string) => void;
@@ -33,7 +35,7 @@ export default function QRGenerator({
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <Card title="QR Code Generator">
       <input
         type="text"
         placeholder="Enter text or URL"
@@ -42,12 +44,9 @@ export default function QRGenerator({
         className="border p-2 rounded w-80 mb-4"
       />
 
-      <button
-        onClick={handleGenerate}
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-      >
+      <Button onClick={handleGenerate} variant="primary">
         Generate QR Code
-      </button>
+      </Button>
 
       <input
         type="file"
@@ -67,6 +66,6 @@ export default function QRGenerator({
           <option value="canvas">Canvas</option>
         </select>
       </div>
-    </div>
+    </Card>
   );
 }

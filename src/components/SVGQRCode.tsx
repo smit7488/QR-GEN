@@ -1,6 +1,8 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import Button from "@/components/Button";
+import Card from "@/components/Card";
+import QRHolder from "@/components/QRHolder";
 
 interface SVGQRCodeProps {
   text: string;
@@ -8,6 +10,14 @@ interface SVGQRCodeProps {
 }
 
 export default function SVGQRCode({ text, uploadedSVG }: SVGQRCodeProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
+
   const downloadQR = () => {
     const svgElement = document.getElementById("qr-code");
     if (!svgElement) return;
@@ -25,24 +35,21 @@ export default function SVGQRCode({ text, uploadedSVG }: SVGQRCodeProps) {
   };
 
   return (
-    <div className="relative mb-4">
-      <QRCodeSVG id="qr-code" value={text} size={200} className="relative" />
-      {uploadedSVG && (
-        <div
-          className="absolute inset-0 flex items-center justify-center"
-          style={{ width: 200, height: 200 }}
-        >
-          <div
-            className="bg-white rounded-full shadow-lg flex items-center justify-center"
-            style={{ width: 50, height: 50, padding: 5 }}
-          >
-            <img src={uploadedSVG} alt="Logo" className="w-10 h-10" />
+    <Card title="Generated QR Code">
+      <QRHolder>
+        <QRCodeSVG id="qr-code" value={text} size={200} />
+        {uploadedSVG && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="bg-white rounded-full shadow-lg p-2">
+              <img src={uploadedSVG} alt="Logo" className="w-10 h-10" />
+            </div>
           </div>
-        </div>
-      )}
-      <button onClick={downloadQR} className="bg-green-500 text-white px-4 py-2 rounded mt-4">
+        )}
+      </QRHolder>
+
+      <Button onClick={downloadQR} variant="secondary">
         Download SVG
-      </button>
-    </div>
+      </Button>
+    </Card>
   );
 }

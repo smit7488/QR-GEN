@@ -1,7 +1,8 @@
-"use client";
-
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
+import Button from "@/components/Button";
+import Card from "@/components/Card";
+import QRHolder from "@/components/QRHolder";
 
 interface CanvasQRCodeProps {
   text: string;
@@ -10,19 +11,13 @@ interface CanvasQRCodeProps {
 
 export default function CanvasQRCode({ text, uploadedSVG }: CanvasQRCodeProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (!canvasRef.current || !uploadedSVG) return;
+    setIsMounted(true);
+  }, []);
 
-    const ctx = canvasRef.current.getContext("2d");
-    if (!ctx) return;
-
-    const img = new Image();
-    img.src = uploadedSVG;
-    img.onload = () => {
-      ctx.drawImage(img, 75, 75, 50, 50); // Adjust position and size
-    };
-  }, [uploadedSVG]);
+  if (!isMounted) return null;
 
   const downloadQR = () => {
     if (!canvasRef.current) return;
@@ -35,11 +30,14 @@ export default function CanvasQRCode({ text, uploadedSVG }: CanvasQRCodeProps) {
   };
 
   return (
-    <div className="relative mb-4">
-      <QRCodeCanvas ref={canvasRef} value={text} size={200} className="relative" />
-      <button onClick={downloadQR} className="bg-green-500 text-white px-4 py-2 rounded mt-4">
+    <Card title="Generated QR Code">
+      <QRHolder>
+        <QRCodeCanvas ref={canvasRef} value={text} size={200} />
+      </QRHolder>
+
+      <Button onClick={downloadQR} variant="secondary">
         Download PNG
-      </button>
-    </div>
+      </Button>
+    </Card>
   );
 }

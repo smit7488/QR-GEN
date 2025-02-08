@@ -2,20 +2,184 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 🌐 Global Styles */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 🌟 Light Mode */
+  --color-background: #f9fafb;
+  --color-foreground: #ffffff;
+  --color-primary: #2563eb;
+  --color-secondary: #9333ea;
+  --color-accent: #facc15;
+  --color-text: #1f2937;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+
+  /* 🌓 Dark Mode */
+  --color-background-dark: #111827;
+  --color-foreground-dark: #1f2937;
+  --color-primary-dark: #3b82f6;
+  --color-secondary-dark: #a855f7;
+  --color-accent-dark: #fde047;
+  --color-text-dark: #e5e7eb;
+  --color-muted-dark: #9ca3af;
+  --color-border-dark: #374151;
+
+  /* 🎨 Spacing & Layout */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 40px;
+
+  /* 🔤 Typography */
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", Menlo, Monaco, "Courier New", monospace;
+
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+
+  /* 🔲 Borders & Shadows */
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --border-width: 1px;
+
+  --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0px 6px 12px rgba(0, 0, 0, 0.15);
+
+  /* ⚡ Transitions */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-medium: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
 }
 
+/* 🌓 Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-background: var(--color-background-dark);
+    --color-foreground: var(--color-foreground-dark);
+    --color-primary: var(--color-primary-dark);
+    --color-secondary: var(--color-secondary-dark);
+    --color-accent: var(--color-accent-dark);
+    --color-text: var(--color-text-dark);
+    --color-muted: var(--color-muted-dark);
+    --color-border: var(--color-border-dark);
   }
 }
 
+/* 🌟 Global Reset */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color var(--transition-medium), color var(--transition-medium);
+}
+
+/* ✨ Utility Classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.white-card {
+  background-color: var(--color-foreground);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.gray-bg {
+background-color: var(--color-background);
+}
+
+.btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-dark);
+}
+
+.btn-outline {
+  background: transparent;
+  border: var(--border-width) solid var(--color-text);
+  color: var(--color-text);
+}
+
+.btn-outline:hover {
+  background: var(--color-text);
+  color: var(--color-background);
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+.border {
+  border: var(--border-width) solid var(--color-border);
+}
+
+.rounded {
+  border-radius: var(--border-radius);
+}
+
+.shadow {
+  box-shadow: var(--shadow-md);
+}
+.qr-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 220px; /* Slightly larger than QR code */
+  height: 220px;
+  padding: 1rem; /* 16px padding */
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-sm);
+}
+
+.qr-holder .placeholder {
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  opacity: 0.6; /* Greyed-out effect */
+  text-align: center;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-md);
+  }
 }

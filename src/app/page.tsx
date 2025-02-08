@@ -1,27 +1,46 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import QRGenerator from "@/components/QRGenerator";
 import SVGQRCode from "@/components/SVGQRCode";
 import CanvasQRCode from "@/components/CanvasQRCode";
+import QRHolder from "@/components/QRHolder";
 
 export default function Home() {
   const [qrData, setQrData] = useState("");
   const [uploadedSVG, setUploadedSVG] = useState<string | null>(null);
   const [qrType, setQrType] = useState<"svg" | "canvas">("svg");
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <h1 className="text-2xl font-bold mb-4">QR Code Generator</h1>
-
-      <QRGenerator onGenerate={setQrData} onUpload={setUploadedSVG} qrType={qrType} setQrType={setQrType} />
-
-      {qrData &&
-        (qrType === "svg" ? (
-          <SVGQRCode text={qrData} uploadedSVG={uploadedSVG} />
+    <div className="container grid grid-cols-1 md:grid-cols-[2fr_1fr] white-card">
+         {/* Right Side (QR Generator Form) */}
+         <div className="p-6">
+        <QRGenerator
+          onGenerate={setQrData}
+          onUpload={setUploadedSVG}
+          qrType={qrType}
+          setQrType={setQrType}
+        />
+      </div>
+      {/* Left Side (QR Code Display) */}
+      <div className="flex justify-center items-center p-6 gray-bg">
+        {isMounted && qrData ? (
+          qrType === "svg" ? (
+            <SVGQRCode text={qrData} uploadedSVG={uploadedSVG} />
+          ) : (
+            <CanvasQRCode text={qrData} uploadedSVG={uploadedSVG} />
+          )
         ) : (
-          <CanvasQRCode text={qrData} uploadedSVG={uploadedSVG} />
-        ))}
+          <QRHolder />
+        )}
+      </div>
+
+   
     </div>
   );
 }
