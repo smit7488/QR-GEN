@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Card from "@/components/Card";
+import BrandingSettings from "@/components/BrandingSettings";
 import QRText from "@/components/QRInputs/QRText";
 import QRUrl from "@/components/QRInputs/QRUrlAddress";
 import QRPhone from "@/components/QRInputs/QRPhone";
@@ -10,18 +11,25 @@ import QRSMS from "@/components/QRInputs/QRSMS";
 import QRWiFi from "@/components/QRInputs/QRWiFi";
 import QRVCard from "@/components/QRInputs/QRVCard";
 
-// ✅ Import Lucide Icons
+// Import Lucide Icons
 import { Globe, FileText, Phone, Mail, MessageSquare, Wifi, Contact } from "lucide-react";
 
 interface QRGeneratorProps {
   onGenerate: (text: string) => void;
   onUpload: (file: string | null) => void;
+  onBorderRadiusChange: (radius: number) => void;
+  onColorChange: (color: string) => void;
 }
 
-export default function QRGenerator({ onGenerate }: QRGeneratorProps) {
+export default function QRGenerator({
+  onGenerate,
+  onUpload,
+  onBorderRadiusChange,
+  onColorChange,
+}: QRGeneratorProps) {
   const [qrType, setQrType] = useState("url");
 
-  // ✅ QR Types with Corresponding Icons
+  // QR Types with Corresponding Icons
   const qrTypes = [
     { type: "url", label: "URL", icon: <Globe size={18} /> },
     { type: "text", label: "Text", icon: <FileText size={18} /> },
@@ -45,7 +53,7 @@ export default function QRGenerator({ onGenerate }: QRGeneratorProps) {
               }`}
               onClick={() => setQrType(type)}
             >
-              {icon} {label}
+              {icon} <span className="text-sm">{label}</span>
             </button>
           ))}
         </div>
@@ -61,6 +69,14 @@ export default function QRGenerator({ onGenerate }: QRGeneratorProps) {
         {qrType === "wifi" && <QRWiFi onGenerate={onGenerate} />}
         {qrType === "vcard" && <QRVCard onGenerate={onGenerate} />}
       </Card>
+<div className="mt-4">
+      {/* Branding & Settings Accordion */}
+      <BrandingSettings 
+        onUpload={onUpload} 
+        onBorderRadiusChange={onBorderRadiusChange} 
+        onColorChange={onColorChange} 
+      />
+      </div>
     </>
   );
 }

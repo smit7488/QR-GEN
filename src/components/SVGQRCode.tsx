@@ -7,9 +7,11 @@ import Card from "@/components/Card";
 interface SVGQRCodeProps {
   text: string;
   uploadedSVG: string | null;
+  qrColor: string;
+  borderRadius: number;
 }
 
-export default function SVGQRCode({ text, uploadedSVG }: SVGQRCodeProps) {
+export default function SVGQRCode({ text, uploadedSVG, qrColor, borderRadius }: SVGQRCodeProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -18,40 +20,47 @@ export default function SVGQRCode({ text, uploadedSVG }: SVGQRCodeProps) {
 
   if (!isMounted) return null;
 
-  const downloadQR = () => {
-    const svgElement = document.getElementById("qr-code");
-    if (!svgElement) return;
-
-    const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svgElement);
-    const blob = new Blob([svgString], { type: "image/svg+xml" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "qrcode.svg";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
+  const qrSize = 200; // Size of the QR code
+  const logoSize = qrSize * 0.2; // 25% of QR code size
+  const paddingSize = logoSize * 1.3; // 30% larger than the logo
 
   return (
     <Card>
-      <div className="relative">
-        <QRCodeSVG id="qr-code" value={text} size={200} />
-        {uploadedSVG && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-white rounded-full shadow-lg p-2">
-              <img src={uploadedSVG} alt="Logo" className="w-10 h-10" />
-            </div>
-          </div>
-        )}
-      </div>
-      <div>
-    
-  </div>
-      
-    </Card>
+      <div className="relative flex justify-center items-center">
+        <svg
+          id="qr-code"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox={`0 0 ${qrSize} ${qrSize}`}
+          width={qrSize}
+          height={qrSize}
+        >
+          {/* QR Code */}
+          <QRCodeSVG value={text} size={qrSize} fgColor={qrColor} />
 
-   
+          {/* Logo Background & Image */}
+          {uploadedSVG && (
+            <>
+              {/* Background padding for the logo */}
+              <rect
+                x={(qrSize - paddingSize) / 2}
+                y={(qrSize - paddingSize) / 2}
+                width={paddingSize}
+                height={paddingSize}
+                rx={borderRadius}
+                fill="white"
+              />
+              {/* Logo Image */}
+              <image
+                href={uploadedSVG}
+                x={(qrSize - logoSize) / 2}
+                y={(qrSize - logoSize) / 2}
+                width={logoSize}
+                height={logoSize}
+              />
+            </>
+          )}
+        </svg>
+      </div>
+    </Card>
   );
 }
