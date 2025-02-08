@@ -1,8 +1,8 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
-import Button from "@/components/Button";
 import Card from "@/components/Card";
-import QRHolder from "@/components/QRHolder";
 
 interface SVGQRCodeProps {
   text: string;
@@ -29,14 +29,14 @@ export default function SVGQRCode({ text, uploadedSVG }: SVGQRCodeProps) {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "branded_qrcode.svg";
+    a.download = "qrcode.svg";
     a.click();
     URL.revokeObjectURL(url);
   };
 
   return (
-    <Card title="Generated QR Code">
-      <QRHolder>
+    <Card>
+      <div className="relative">
         <QRCodeSVG id="qr-code" value={text} size={200} />
         {uploadedSVG && (
           <div className="absolute inset-0 flex items-center justify-center">
@@ -45,11 +45,13 @@ export default function SVGQRCode({ text, uploadedSVG }: SVGQRCodeProps) {
             </div>
           </div>
         )}
-      </QRHolder>
-
-      <Button onClick={downloadQR} variant="secondary">
-        Download SVG
-      </Button>
+      </div>
+      <div>
+    
+  </div>
+      
     </Card>
+
+   
   );
 }

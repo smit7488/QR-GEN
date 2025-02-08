@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Card from "@/components/Card";
 import QRText from "@/components/QRInputs/QRText";
-import QRUrl from "@/components/QRInputs/QRUrl";
+import QRUrl from "@/components/QRInputs/QRUrlAddress";
 import QRPhone from "@/components/QRInputs/QRPhone";
 import QREmail from "@/components/QRInputs/QREmail";
 import QRSMS from "@/components/QRInputs/QRSMS";
@@ -12,10 +12,11 @@ import QRVCard from "@/components/QRInputs/QRVCard";
 
 interface QRGeneratorProps {
   onGenerate: (text: string) => void;
+  onUpload: (file: string | null) => void;
 }
 
 export default function QRGenerator({ onGenerate }: QRGeneratorProps) {
-  const [qrType, setQrType] = useState("text");
+  const [qrType, setQrType] = useState("url");
 
   const qrTypes = [
     { type: "url", label: "URL" },
@@ -28,9 +29,9 @@ export default function QRGenerator({ onGenerate }: QRGeneratorProps) {
   ];
 
   return (
-    <Card title="QR Code Generator">
+    <Card>
       {/* QR Type Selection (Button Grid) */}
-      <div className="grid grid-cols-3 gap-2 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
         {qrTypes.map(({ type, label }) => (
           <button
             key={type}

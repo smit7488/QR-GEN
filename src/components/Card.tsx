@@ -1,12 +1,11 @@
 interface CardProps {
-    title: string;
     children: React.ReactNode;
   }
   
-  export default function Card({ title, children }: CardProps) {
+  export default function Card({ children }: CardProps) {
     return (
       <div className="card">
-        <h2 className="text-lg">{title}</h2>
+        
         <div>{children}</div>
       </div>
     );
