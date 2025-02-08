@@ -1,0 +1,37 @@
+import { useState } from "react";
+import Button from "@/components/Button";
+
+interface QRUrlProps {
+  onGenerate: (text: string) => void;
+}
+
+export default function QRUrl({ onGenerate }: QRUrlProps) {
+  const [url, setUrl] = useState("");
+
+  const handleGenerate = () => {
+    let formattedUrl = url.trim();
+    
+    // Ensure the URL starts with http:// or https://
+    if (!formattedUrl.startsWith("http://") && !formattedUrl.startsWith("https://")) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
+
+    onGenerate(formattedUrl);
+  };
+
+  return (
+    <>
+      <input
+        type="url"
+        placeholder="Enter URL (https://example.com)"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+        className="border p-2 rounded w-80 mb-4"
+      />
+
+      <Button onClick={handleGenerate} variant="primary">
+        Generate QR Code
+      </Button>
+    </>
+  );
+}

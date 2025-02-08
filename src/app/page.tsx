@@ -17,9 +17,10 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container grid grid-cols-1 md:grid-cols-[2fr_1fr] white-card">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+     <div className="container grid grid-cols-1 md:grid-cols-[2fr_1fr] white-card">
          {/* Right Side (QR Generator Form) */}
-         <div className="p-6">
+         <div className="p-6 gray-bg">
         <QRGenerator
           onGenerate={setQrData}
           onUpload={setUploadedSVG}
@@ -28,7 +29,7 @@ export default function Home() {
         />
       </div>
       {/* Left Side (QR Code Display) */}
-      <div className="flex justify-center items-center p-6 gray-bg">
+      <div className="flex justify-center items-center p-6 ">
         {isMounted && qrData ? (
           qrType === "svg" ? (
             <SVGQRCode text={qrData} uploadedSVG={uploadedSVG} />
@@ -41,6 +42,7 @@ export default function Home() {
       </div>
 
    
+    </div>
     </div>
   );
 }
