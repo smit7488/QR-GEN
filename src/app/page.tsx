@@ -132,11 +132,12 @@ export default function Page() {
   return (
   
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-400 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100">
-      <div className="absolute gradient w-full">
+      <div className= "gradient w-full fixed">
+        </div>
       <Nav />
 
       <div className="min-h-screen flex flex-col items-center p-4">
-        <div className="container grid grid-cols-1 md:grid-cols-[2fr_1fr] bg-white dark:bg-gray-800 shadow-lg mt-24 p-6 md:p-8 rounded-lg border border-gray-200 dark:border-gray-700 gap-6">
+        <div className="container grid grid-cols-1 md:grid-cols-[2fr_1fr] bg-white dark:bg-gray-800 shadow-lg mt-24 mb-24 p-6 md:p-8 rounded-lg border border-gray-200 dark:border-gray-700 gap-6">
           {/* Left Side (QR Generator Form) */}
           <div className="p-4 sm:p-6 md:p-8 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-700 rounded-lg">
             <QRGenerator
@@ -149,7 +150,7 @@ export default function Page() {
 
           {/* Right Side (QR Code Display) */}
           <div className="flex flex-col items-center">
-            <QRHolder className="dark:bg-gray-900 dark:border-gray-700">
+            <QRHolder className="bg-gray-300 border-gray-500 dark:bg-gray-900 dark:border-gray-700">
               {isMounted && qrData ? (
                 <SVGQRCode text={qrData} uploadedSVG={uploadedSVG} qrColor={qrColor} borderRadius={borderRadius} />
               ) : null}
@@ -173,7 +174,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </div>
+    
     </div>
   );
 }
