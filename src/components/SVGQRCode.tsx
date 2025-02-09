@@ -20,9 +20,9 @@ export default function SVGQRCode({ text, uploadedSVG, qrColor, borderRadius }: 
 
   if (!isMounted) return null;
 
-  const qrSize = 200; // Size of the QR code
-  const logoSize = qrSize * 0.2; // 25% of QR code size
-  const paddingSize = logoSize * 1.3; // 30% larger than the logo
+  const qrSize = 300; // Size of the QR code
+  const logoSize = qrSize * 0.16; // 20% of QR code size
+  const paddingSize = logoSize * 1.25; // 30% larger than the logo
 
   return (
     <Card>

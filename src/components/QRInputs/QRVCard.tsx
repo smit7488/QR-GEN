@@ -28,31 +28,30 @@ END:VCARD`;
   };
 
   return (
-    <>
-      <div className="flex flex-col">
+    <div className="flex flex-col">
       <div className="grid grid-cols-2 gap-2 mb-4">
         <input
           type="text"
           placeholder="First Name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
         />
         <input
           type="text"
           placeholder="Last Name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
         />
-    
+      </div>
 
       <input
         type="text"
         placeholder="Organization"
         value={organization}
         onChange={(e) => setOrganization(e.target.value)}
-        className="border p-2 rounded w-full"
+        className="border p-2 rounded w-full mb-2 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
       />
 
       <input
@@ -60,7 +59,7 @@ END:VCARD`;
         placeholder="Phone Number"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-        className="border p-2 rounded w-full"
+        className="border p-2 rounded w-full mb-2 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
       />
 
       <input
@@ -68,7 +67,7 @@ END:VCARD`;
         placeholder="Email Address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 rounded w-full"
+        className="border p-2 rounded w-full mb-2 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
       />
 
       <input
@@ -76,13 +75,12 @@ END:VCARD`;
         placeholder="Website (Optional)"
         value={website}
         onChange={(e) => setWebsite(e.target.value)}
-        className="border p-2 rounded w-full"
+        className="border p-2 rounded w-full mb-4 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
       />
-  </div>
+
       <Button onClick={handleGenerate} variant="primary">
         Generate QR Code
       </Button>
-      </div>
-    </>
+    </div>
   );
 }

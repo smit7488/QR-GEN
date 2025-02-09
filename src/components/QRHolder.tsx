@@ -1,13 +1,16 @@
+import { ReactNode } from "react";
 import DefaultQR from "@/components/DefaultQR";
 
 interface QRHolderProps {
-  children?: React.ReactNode;
+  children: ReactNode;
+  className?: string; // Allow custom classes
 }
 
-export default function QRHolder({ children }: QRHolderProps) {
+export default function QRHolder({ children, className = "" }: QRHolderProps) {
   return (
-    <div className="qr-holder">
-      {children ? children : <DefaultQR />}
+    <div className={`qr-holder ${className}`}>
+       {children ? children : <DefaultQR />}
     </div>
   );
 }
+

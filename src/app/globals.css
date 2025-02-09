@@ -2,29 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 🌐 Global Styles */
+/* Global Styles */
+/* Global Styles */
+/* Global Styles */
 :root {
-  /* 🌟 Light Mode */
-  --color-background: #f9fafb;
-  --color-foreground: #ffffff;
-  --color-primary: #2563eb;
-  --color-secondary: #9333ea;
-  --color-accent: #facc15;
-  --color-text: #1f2937;
-  --color-muted: #6b7280;
-  --color-border: #e5e7eb;
+  /* Light Mode */
+  --color-background: #f8f9fa; /* Soft off-white */
+  --color-foreground: #ffffff; /* True white */
+  --color-primary: #4a90e2; /* Muted cool blue */
+  --color-secondary: #5c677d; /* Cool neutral gray */
+  --color-accent: #a0aec0; /* Soft steel gray */
+  --color-text: #374151; /* Dark neutral gray */
+  --color-muted: #6b7280; /* Muted cool gray */
+  --color-border: #d1d5db; /* Light cool gray */
 
-  /* 🌓 Dark Mode */
-  --color-background-dark: #111827;
-  --color-foreground-dark: #1f2937;
-  --color-primary-dark: #3b82f6;
-  --color-secondary-dark: #a855f7;
-  --color-accent-dark: #fde047;
-  --color-text-dark: #e5e7eb;
-  --color-muted-dark: #9ca3af;
-  --color-border-dark: #374151;
+  /* Dark Mode */
+  --color-background-dark: #1f2933; /* Deep charcoal gray */
+  --color-foreground-dark: #2d3748; /* Slightly lighter deep gray */
+  --color-primary-dark: #3b82f6; /* Soft blue for contrast */
+  --color-secondary-dark: #718096; /* Soft muted gray */
+  --color-accent-dark: #a0aec0; /* Soft steel gray */
+  --color-text-dark: #e5e7eb; /* Off-white for readability */
+  --color-muted-dark: #9ca3af; /* Muted gray */
+  --color-border-dark: #374151; /* Strong cool gray */
 
-  /* 🎨 Spacing & Layout */
+  /* Gradient Backgrounds */
+  --gradient-linear: linear-gradient(15deg, #f8f9fa, #eceff4, #dee2e6, #d1d5db);
+  --gradient-linear-dark: linear-gradient(15deg, #1f2933, #2d3748, #374151, #4b5563);
+
+  --gradient-radial: radial-gradient(circle at 20% 0%, #f8f9fa, #eceff4, #dee2e6, #d1d5db);
+  --gradient-radial-dark: radial-gradient(circle at 20% 0%, #1f2933, #2d3748, #374151, #4b5563);
+
+  /* Spacing & Layout */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
@@ -32,7 +41,7 @@
   --spacing-xl: 32px;
   --spacing-2xl: 40px;
 
-  /* 🔤 Typography */
+  /* Typography */
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", Menlo, Monaco, "Courier New", monospace;
 
@@ -42,7 +51,7 @@
   --font-size-xl: 1.5rem;
   --font-size-2xl: 2rem;
 
-  /* 🔲 Borders & Shadows */
+  /* Borders & Shadows */
   --border-radius: 8px;
   --border-radius-lg: 12px;
   --border-width: 1px;
@@ -51,13 +60,13 @@
   --shadow-md: 0px 4px 8px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0px 6px 12px rgba(0, 0, 0, 0.15);
 
-  /* ⚡ Transitions */
+  /* Transitions */
   --transition-fast: 0.2s ease-in-out;
   --transition-medium: 0.3s ease-in-out;
   --transition-slow: 0.5s ease-in-out;
 }
 
-/* 🌓 Dark Mode Support */
+/* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--color-background-dark);
@@ -71,7 +80,7 @@
   }
 }
 
-/* 🌟 Global Reset */
+/* Global Reset */
 body {
   font-family: var(--font-sans);
   font-size: var(--font-size-md);
@@ -83,11 +92,23 @@ body {
   transition: background-color var(--transition-medium), color var(--transition-medium);
 }
 
-/* ✨ Utility Classes */
+.gradient {
+background-color: #f3f4f6; /* Softer light gray base */
+background-image: -webkit-radial-gradient(circle at 20% 0%, #f9fafb, #eef1f4, #e0e4e8, #d4d8dd, #c8ccd2, #bfc5ce, #a8b0b9, #909aa4);
+background-image: -moz-radial-gradient(circle at 20% 0%, #f9fafb, #eef1f4, #e0e4e8, #d4d8dd, #c8ccd2, #bfc5ce, #a8b0b9, #909aa4);
+background-image: -o-radial-gradient(circle at 20% 0%, #f9fafb, #eef1f4, #e0e4e8, #d4d8dd, #c8ccd2, #bfc5ce, #a8b0b9, #909aa4);
+background-image: radial-gradient(circle at 20% 0%, #f9fafb, #eef1f4, #e0e4e8, #d4d8dd, #c8ccd2, #bfc5ce, #a8b0b9, #909aa4);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+
+  
+}
+
+
+/* Utility Classes */
 .container {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-md);
 }
 
 .white-card {
@@ -162,8 +183,8 @@ background-color: var(--color-background);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 220px; /* Slightly larger than QR code */
-  height: 220px;
+  width: auto;
+  height: auto;
   padding: 1rem; /* 16px padding */
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);

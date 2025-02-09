@@ -48,9 +48,12 @@ export default function QRGenerator({
           {qrTypes.map(({ type, label, icon }) => (
             <button
               key={type}
-              className={`btn flex items-center gap-2 justify-center ${
-                qrType === type ? "btn-primary" : "btn-outline"
-              }`}
+              className={`btn flex items-center gap-y-1 gap-x-1 flex-wrap justify-center transition-colors
+                ${
+                  qrType === type
+                    ? "btn-primary dark:bg-blue-600 dark:text-white"
+                    : "btn-outline dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-700"
+                }`}
               onClick={() => setQrType(type)}
             >
               {icon} <span className="text-sm">{label}</span>
@@ -69,13 +72,14 @@ export default function QRGenerator({
         {qrType === "wifi" && <QRWiFi onGenerate={onGenerate} />}
         {qrType === "vcard" && <QRVCard onGenerate={onGenerate} />}
       </Card>
-<div className="mt-4">
+
       {/* Branding & Settings Accordion */}
-      <BrandingSettings 
-        onUpload={onUpload} 
-        onBorderRadiusChange={onBorderRadiusChange} 
-        onColorChange={onColorChange} 
-      />
+      <div className="border-t-gray-900 dark:border-t-gray-800">
+        <BrandingSettings
+          onUpload={onUpload}
+          onBorderRadiusChange={onBorderRadiusChange}
+          onColorChange={onColorChange}
+        />
       </div>
     </>
   );
