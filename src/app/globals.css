@@ -93,16 +93,11 @@ body {
 }
 
 .gradient {
-background-color: #f3f4f6; /* Softer light gray base */
-background-image: -webkit-radial-gradient(circle at 20% 0%, #f9fafb, #eef1f4, #e0e4e8, #d4d8dd, #c8ccd2, #bfc5ce, #a8b0b9, #909aa4);
-background-image: -moz-radial-gradient(circle at 20% 0%, #f9fafb, #eef1f4, #e0e4e8, #d4d8dd, #c8ccd2, #bfc5ce, #a8b0b9, #909aa4);
-background-image: -o-radial-gradient(circle at 20% 0%, #f9fafb, #eef1f4, #e0e4e8, #d4d8dd, #c8ccd2, #bfc5ce, #a8b0b9, #909aa4);
-background-image: radial-gradient(circle at 20% 0%, #f9fafb, #eef1f4, #e0e4e8, #d4d8dd, #c8ccd2, #bfc5ce, #a8b0b9, #909aa4);
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-size: cover;
-
-  
+  background-image: url("/bg-image2.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten;
 }
 
 
