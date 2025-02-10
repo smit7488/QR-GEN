@@ -2,14 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global Styles */
-/* Global Styles */
-/* Global Styles */
+/* Disable transitions when switching themes */
+html.dark * {
+  transition: none !important;
+}
+
+html * {
+  transition: none !important;
+}
+
+/* Keep hover and normal transitions */
+.btn {
+  transition: all var(--transition-fast);
+}
+
+.btn-outline {
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
 :root {
   /* Light Mode */
   --color-background: #f8f9fa; /* Soft off-white */
   --color-foreground: #ffffff; /* True white */
-  --color-primary: #4a90e2; /* Muted cool blue */
+  --color-primary: #412d84; /* Muted cool blue */
+  --color-primary-gradient: linear-gradient(135deg, #ae16ae, #a111aa, #930ca5, #8608a0, #78059b, #6b0296, #5d0191, #4f008b);
+  --color-lighter-gradient: linear-gradient(135deg, #d41bd4, #c614d2, #b90dcf, #aa07cc, #9c03ca, #8d00c7, #7d00c3, #6d00c0);
+  --color-glow: #ffd3ff20;
   --color-secondary: #5c677d; /* Cool neutral gray */
   --color-accent: #a0aec0; /* Soft steel gray */
   --color-text: #374151; /* Dark neutral gray */
@@ -19,12 +37,20 @@
   /* Dark Mode */
   --color-background-dark: #1f2933; /* Deep charcoal gray */
   --color-foreground-dark: #2d3748; /* Slightly lighter deep gray */
-  --color-primary-dark: #3b82f6; /* Soft blue for contrast */
+  --color-primary-dark: #6446c7; /* Soft blue for contrast */
   --color-secondary-dark: #718096; /* Soft muted gray */
   --color-accent-dark: #a0aec0; /* Soft steel gray */
   --color-text-dark: #e5e7eb; /* Off-white for readability */
   --color-muted-dark: #9ca3af; /* Muted gray */
   --color-border-dark: #374151; /* Strong cool gray */
+
+    /* Sliders */
+    --slider-thumb-color: #fff;
+    --slider-thumb-color-focus: #6446c7;
+    --slider-track-selected: #2EA083;
+    --slider-track-unselected: #d1d5db;
+    --slider-thumb-size: 1rem;
+    --slider-track-height: 0.5rem;
 
   /* Gradient Backgrounds */
   --gradient-linear: linear-gradient(15deg, #f8f9fa, #eceff4, #dee2e6, #d1d5db);
@@ -89,7 +115,6 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background-color var(--transition-medium), color var(--transition-medium);
 }
 
 .gradient {
@@ -129,12 +154,24 @@ background-color: var(--color-background);
 }
 
 .btn-primary {
+  background: var(--color-primary-gradient);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px var(--color-glow);
+}
+
+.btn-primary:hover {
+  background: var(--color-lighter-gradient);
+}
+
+
+.btn-primary-dark {
   background-color: var(--color-primary);
   color: white;
   border: none;
 }
 
-.btn-primary:hover {
+.btn-primary-dark:hover {
   background-color: var(--color-primary-dark);
 }
 
@@ -194,5 +231,37 @@ background-color: var(--color-background);
   text-align: center;
 }
 
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--color-border);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
+}
 
+.btn-outline:hover {
+  border-color: var(--color-text); /* Stronger outline on hover */
+  background: transparent;
+  color: var(--color-text);
+}
 
+/* Selected Button */
+.btn-outline-selected {
+  border: 3px solid var(--color-text);
+  color: var(--color-text);
+}
+
+/* DARK MODE */
+.dark .btn-outline {
+  border: 2px solid var(--color-border-dark);
+  color: var(--color-text-dark);
+}
+
+.dark .btn-outline:hover {
+  border-color: var(--color-text-dark);
+}
+
+/* Selected Button in Dark Mode: White Outline & Text */
+.dark .btn-outline-selected {
+  border: 3px solid white;  /* White outline */
+  color: white;  /* White text */
+}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Upload, ChevronDown, Image as ImageIcon } from "lucide-react";
+import CustomSlider from "./CustomSlider";
 
 interface BrandingSettingsProps {
   onUpload: (file: string | null) => void;
@@ -9,6 +10,7 @@ interface BrandingSettingsProps {
   onColorChange: (color: string) => void;
 }
 
+  
 export default function BrandingSettings({
   onUpload,
   onBorderRadiusChange,
@@ -19,6 +21,7 @@ export default function BrandingSettings({
   const [borderRadius, setBorderRadius] = useState(10);
   const [qrColor, setQrColor] = useState("#000000");
   const [isOpen, setIsOpen] = useState(false);
+  const [sliderValue, setSliderValue] = useState(50);
 
   // Handle File Upload
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +64,10 @@ export default function BrandingSettings({
             <label className="font-medium text-gray-900 dark:text-gray-100">Upload Logo</label>
             <label
               htmlFor="file-upload"
-              className="btn btn-outline flex items-center gap-2 cursor-pointer border dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-700 dark:hover:bg-gray-600"
+              className={`btn btn-outline flex items-center gap-2 cursor-pointer
+                border dark:border-gray-600 text-gray-700 dark:text-gray-300
+                hover:border-gray-700 hover:text-gray-800 dark:hover:border-white dark:hover:text-white`}
+              
             >
               <Upload size={18} /> Upload (SVG/PNG/JPG)
             </label>
@@ -84,18 +90,18 @@ export default function BrandingSettings({
           {/* Border Radius Slider */}
           <div>
             <label className="font-medium text-gray-900 dark:text-gray-100">Logo Background Border Radius</label>
-            <input
-              type="range"
-              min="0"
-              max="30"
-              value={borderRadius}
-              onChange={(e) => {
-                const newRadius = parseInt(e.target.value);
-                setBorderRadius(newRadius);
-                onBorderRadiusChange(newRadius);
-              }}
-              className="w-full accent-blue-500 dark:accent-blue-400"
-            />
+            <CustomSlider
+  min={0}
+  max={30}
+  value={borderRadius}
+  onChange={(newRadius) => {
+    setBorderRadius(newRadius);
+    onBorderRadiusChange(newRadius);
+  }}
+/>
+
+
+            
             <p className="text-sm text-gray-600 dark:text-gray-400">Radius: {borderRadius}px</p>
           </div>
 

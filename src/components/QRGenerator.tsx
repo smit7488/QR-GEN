@@ -10,9 +10,29 @@ import QREmail from "@/components/QRInputs/QREmail";
 import QRSMS from "@/components/QRInputs/QRSMS";
 import QRWiFi from "@/components/QRInputs/QRWiFi";
 import QRVCard from "@/components/QRInputs/QRVCard";
+import QREvent from "@/components/QRInputs/QREvent";
+import QRLocation from "@/components/QRInputs/QRLocation";
+import QRCrypto from "@/components/QRInputs/QRCrypto";
+
 
 // Import Lucide Icons
-import { Globe, FileText, Phone, Mail, MessageSquare, Wifi, Contact } from "lucide-react";
+import {
+  Globe,
+  FileText,
+  Phone,
+  Mail,
+  MessageSquare,
+  Wifi,
+  Contact,
+  Music,
+  Apple,
+  Users,
+  CreditCard,
+  Calendar,
+  MapPin,
+  Bitcoin,
+  MessageCircle,
+} from "lucide-react";
 
 interface QRGeneratorProps {
   onGenerate: (text: string) => void;
@@ -38,6 +58,10 @@ export default function QRGenerator({
     { type: "sms", label: "SMS", icon: <MessageSquare size={18} /> },
     { type: "wifi", label: "Wi-Fi", icon: <Wifi size={18} /> },
     { type: "vcard", label: "vCard", icon: <Contact size={18} /> },
+    { type: "event", label: "Event", icon: <Calendar size={18} /> },
+    { type: "location", label: "Location", icon: <MapPin size={18} /> },
+    { type: "crypto", label: "Crypto", icon: <Bitcoin size={18} /> },
+
   ];
 
   return (
@@ -48,11 +72,11 @@ export default function QRGenerator({
           {qrTypes.map(({ type, label, icon }) => (
             <button
               key={type}
-              className={`btn flex items-center gap-y-1 gap-x-1 flex-wrap justify-center transition-colors
+              className={`btn flex items-center gap-x-1 flex-wrap justify-center
                 ${
                   qrType === type
-                    ? "btn-primary dark:bg-blue-600 dark:text-white"
-                    : "btn-outline dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-700"
+                    ? "btn-outline btn-outline-selected dark:btn-outline-selected"
+                    : "btn-outline dark:border-gray-500 dark:text-gray-300 dark:hover:border-gray-400"
                 }`}
               onClick={() => setQrType(type)}
             >
@@ -71,6 +95,11 @@ export default function QRGenerator({
         {qrType === "sms" && <QRSMS onGenerate={onGenerate} />}
         {qrType === "wifi" && <QRWiFi onGenerate={onGenerate} />}
         {qrType === "vcard" && <QRVCard onGenerate={onGenerate} />}
+
+        {qrType === "event" && <QREvent onGenerate={onGenerate} />}
+        {qrType === "location" && <QRLocation onGenerate={onGenerate} />}
+        {qrType === "crypto" && <QRCrypto onGenerate={onGenerate} />}
+
       </Card>
 
       {/* Branding & Settings Accordion */}
