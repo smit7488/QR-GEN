@@ -164,11 +164,13 @@ export default function Page() {
                     <Download size={18} /> <span className="text-sm">SVG</span>
                   </div>
                 </Button>
+                <div className="hidden">
                 <Button onClick={downloadPNG} variant="secondary">
                   <div className="flex gap-2">
                     <Download size={18} /> <span className="text-sm">PNG</span>
                   </div>
                 </Button>
+                  </div>
               </div>
             )}
           </div>
