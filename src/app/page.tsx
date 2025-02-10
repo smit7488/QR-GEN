@@ -159,9 +159,9 @@ export default function Page() {
             {/* Download Buttons Below QRHolder */}
             {isMounted && qrData && (
               <div className="mt-4 flex gap-4">
-                <Button onClick={downloadSVG} variant="secondary">
+                <Button onClick={downloadSVG} variant="primary">
                   <div className="flex gap-2">
-                    <Download size={18} /> <span className="text-sm">SVG</span>
+                    <Download size={18} /> <span className="text-sm">Download QR Code (SVG)</span>
                   </div>
                 </Button>
                 <div className="hidden">
