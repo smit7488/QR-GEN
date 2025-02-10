@@ -22,24 +22,44 @@ export default function BrandingSettings({
   const [qrColor, setQrColor] = useState("#000000");
   const [isOpen, setIsOpen] = useState(false);
   const [sliderValue, setSliderValue] = useState(50);
-
-  // Handle File Upload
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-
-    if (file) {
+    if (!file) return;
+  
+    console.log("📂 Selected File:", file.name, "Type:", file.type);
+  
+    if (file.type === "image/svg+xml") {
+      console.log("✅ Detected SVG. Reading as text...");
       const reader = new FileReader();
       reader.onload = (e) => {
-        const base64Image = e.target?.result as string;
-        setSelectedFile(base64Image);
-        onUpload(base64Image);
+        if (!e.target?.result) {
+          console.error("🚨 SVG FileReader failed");
+          return;
+        }
+  
+        const svgText = e.target.result as string;
+        console.log("🔍 SVG Content Read:", svgText.substring(0, 100) + "..."); // Log first 100 chars
+        onUpload(svgText); // Store raw SVG text
       };
-      reader.readAsDataURL(file);
-
-      // Extract filename and extension
-      setFileName(`${file.name} (${file.type.split("/")[1]})`);
+      reader.readAsText(file); // Correct method for SVG
+    } else {
+      console.log("📸 Detected PNG/JPG. Converting to Base64...");
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (!e.target?.result) {
+          console.error("🚨 Image FileReader failed");
+          return;
+        }
+  
+        const base64Image = e.target.result as string;
+        console.log("🖼️ Base64 Image:", base64Image.substring(0, 50) + "..."); // Log first 50 chars
+        onUpload(base64Image); // Store as Base64 for images
+      };
+      reader.readAsDataURL(file); // Convert PNG/JPG to Base64
     }
   };
+  
+
 
   return (
     <div className="mt-6 border-t-gray-300 border-gray-300 dark:border-gray-700 pt-6 w-full">
