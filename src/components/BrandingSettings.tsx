@@ -89,12 +89,12 @@ export default function BrandingSettings({
                 hover:border-gray-700 hover:text-gray-800 dark:hover:border-white dark:hover:text-white`}
               
             >
-              <Upload size={18} /> Upload (SVG/PNG/JPG)
+              <Upload size={18} /> Upload (SVG)
             </label>
             <input
               id="file-upload"
               type="file"
-              accept=".svg,.png,.jpg,.jpeg"
+              accept=".svg"
               className="hidden"
               onChange={handleFileUpload}
             />
