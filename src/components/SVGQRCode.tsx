@@ -7,11 +7,12 @@ import Card from "@/components/Card";
 interface SVGQRCodeProps {
   text: string;
   uploadedSVG: string | null;
+  uploadedImage: string | null; // ✅ Add uploaded image prop
   qrColor: string;
   borderRadius: number;
 }
 
-export default function SVGQRCode({ text, uploadedSVG, qrColor, borderRadius }: SVGQRCodeProps) {
+export default function SVGQRCode({ text, uploadedSVG, uploadedImage, qrColor, borderRadius }: SVGQRCodeProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [processedSVG, setProcessedSVG] = useState<string | null>(null);
   const [scaleFactor, setScaleFactor] = useState(1);
@@ -76,7 +77,7 @@ export default function SVGQRCode({ text, uploadedSVG, qrColor, borderRadius }: 
           <QRCodeSVG value={text} size={qrSize} fgColor={qrColor} />
 
           {/* Background Padding (Centered White Box) */}
-          {processedSVG && (
+          {(processedSVG || uploadedImage) && (
             <rect
               x={(qrSize - paddingSize) / 2}
               y={(qrSize - paddingSize) / 2}
@@ -92,6 +93,18 @@ export default function SVGQRCode({ text, uploadedSVG, qrColor, borderRadius }: 
             <g
               transform={`translate(${(qrSize - logoMaxSize) / 2}, ${(qrSize - logoMaxSize) / 2}) scale(${scaleFactor})`}
               dangerouslySetInnerHTML={{ __html: processedSVG }}
+            />
+          )}
+
+          {/* ✅ Embed Image if uploadedImage is present */}
+          {uploadedImage && (
+            <image
+              href={uploadedImage}
+              x={(qrSize - logoMaxSize) / 2}
+              y={(qrSize - logoMaxSize) / 2}
+              width={logoMaxSize}
+              height={logoMaxSize}
+              preserveAspectRatio="xMidYMid meet"
             />
           )}
         </svg>

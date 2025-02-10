@@ -10,7 +10,6 @@ interface BrandingSettingsProps {
   onColorChange: (color: string) => void;
 }
 
-  
 export default function BrandingSettings({
   onUpload,
   onBorderRadiusChange,
@@ -22,44 +21,55 @@ export default function BrandingSettings({
   const [qrColor, setQrColor] = useState("#000000");
   const [isOpen, setIsOpen] = useState(false);
   const [sliderValue, setSliderValue] = useState(50);
+  const [uploadedSVG, setUploadedSVG] = useState<string | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-  
+
     console.log("📂 Selected File:", file.name, "Type:", file.type);
-  
+
+    const reader = new FileReader();
+
     if (file.type === "image/svg+xml") {
       console.log("✅ Detected SVG. Reading as text...");
-      const reader = new FileReader();
       reader.onload = (e) => {
         if (!e.target?.result) {
           console.error("🚨 SVG FileReader failed");
           return;
         }
-  
         const svgText = e.target.result as string;
-        console.log("🔍 SVG Content Read:", svgText.substring(0, 100) + "..."); // Log first 100 chars
-        onUpload(svgText); // Store raw SVG text
+
+        console.log("🔍 SVG Content Read:", svgText.substring(0, 100) + "...");
+
+        // Store raw SVG text
+        setUploadedSVG(svgText);
+        setUploadedImage(null); // Ensure no image base64 is stored
+        onUpload(svgText); // Pass to parent component
       };
-      reader.readAsText(file); // Correct method for SVG
-    } else {
+      reader.readAsText(file); // Read SVG as text
+    } else if (file.type.startsWith("image/")) {
       console.log("📸 Detected PNG/JPG. Converting to Base64...");
-      const reader = new FileReader();
       reader.onload = (e) => {
         if (!e.target?.result) {
           console.error("🚨 Image FileReader failed");
           return;
         }
-  
         const base64Image = e.target.result as string;
-        console.log("🖼️ Base64 Image:", base64Image.substring(0, 50) + "..."); // Log first 50 chars
-        onUpload(base64Image); // Store as Base64 for images
+
+        console.log("🖼️ Base64 Image:", base64Image.substring(0, 50) + "...");
+
+        // Store base64 image
+        setUploadedImage(base64Image);
+        setUploadedSVG(null); // Ensure no SVG is stored
+        onUpload(base64Image); // Pass to parent component
       };
       reader.readAsDataURL(file); // Convert PNG/JPG to Base64
+    } else {
+      console.error("🚨 Unsupported file format:", file.type);
     }
   };
-  
-
 
   return (
     <div className="pt-6 w-full">
@@ -87,9 +97,8 @@ export default function BrandingSettings({
               className={`btn btn-outline flex items-center gap-2 cursor-pointer
                 border dark:border-gray-600 text-gray-700 dark:text-gray-300
                 hover:border-gray-700 hover:text-gray-800 dark:hover:border-white dark:hover:text-white`}
-              
             >
-              <Upload size={18} /> Upload (SVG/PNG/JPG)
+              <Upload size={18} /> Upload (SVG)
             </label>
             <input
               id="file-upload"
@@ -111,17 +120,14 @@ export default function BrandingSettings({
           <div>
             <label className="font-medium text-gray-900 dark:text-gray-100">Logo Background Border Radius</label>
             <CustomSlider
-  min={0}
-  max={30}
-  value={borderRadius}
-  onChange={(newRadius) => {
-    setBorderRadius(newRadius);
-    onBorderRadiusChange(newRadius);
-  }}
-/>
-
-
-            
+              min={0}
+              max={30}
+              value={borderRadius}
+              onChange={(newRadius) => {
+                setBorderRadius(newRadius);
+                onBorderRadiusChange(newRadius);
+              }}
+            />
             <p className="text-sm text-gray-600 dark:text-gray-400">Radius: {borderRadius}px</p>
           </div>
 
