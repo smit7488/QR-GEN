@@ -103,7 +103,7 @@ export default function QRGenerator({
       </Card>
 
       {/* Branding & Settings Accordion */}
-      <div className="border-t-gray-900 dark:border-t-gray-800">
+      <div className="border-t mt-6 border-t-gray-300 dark:border-t-gray-600">
         <BrandingSettings
           onUpload={onUpload}
           onBorderRadiusChange={onBorderRadiusChange}

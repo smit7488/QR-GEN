@@ -62,7 +62,7 @@ export default function BrandingSettings({
 
 
   return (
-    <div className="mt-6 border-t-gray-300 border-gray-300 dark:border-gray-700 pt-6 w-full">
+    <div className="pt-6 w-full">
       {/* Accordion Header */}
       <button
         className="w-full flex items-center justify-center gap-2 p-3 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-sm dark:shadow-md hover:bg-gray-100 dark:hover:bg-gray-600"
