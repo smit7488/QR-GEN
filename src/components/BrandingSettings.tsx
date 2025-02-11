@@ -10,7 +10,6 @@ interface BrandingSettingsProps {
   onColorChange: (color: string) => void;
 }
 
-  
 export default function BrandingSettings({
   onUpload,
   onBorderRadiusChange,
@@ -25,9 +24,12 @@ export default function BrandingSettings({
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-  
+
     console.log("📂 Selected File:", file.name, "Type:", file.type);
-  
+
+    // ✅ Set filename state
+    setFileName(`${file.name} (${file.type.split("/")[1]})`);
+
     if (file.type === "image/svg+xml") {
       console.log("✅ Detected SVG. Reading as text...");
       const reader = new FileReader();
@@ -36,7 +38,7 @@ export default function BrandingSettings({
           console.error("🚨 SVG FileReader failed");
           return;
         }
-  
+
         const svgText = e.target.result as string;
         console.log("🔍 SVG Content Read:", svgText.substring(0, 100) + "..."); // Log first 100 chars
         onUpload(svgText); // Store raw SVG text
@@ -50,7 +52,7 @@ export default function BrandingSettings({
           console.error("🚨 Image FileReader failed");
           return;
         }
-  
+
         const base64Image = e.target.result as string;
         console.log("🖼️ Base64 Image:", base64Image.substring(0, 50) + "..."); // Log first 50 chars
         onUpload(base64Image); // Store as Base64 for images
@@ -58,8 +60,6 @@ export default function BrandingSettings({
       reader.readAsDataURL(file); // Convert PNG/JPG to Base64
     }
   };
-  
-
 
   return (
     <div className="pt-6 w-full">
@@ -69,7 +69,9 @@ export default function BrandingSettings({
         onClick={() => setIsOpen(!isOpen)}
       >
         <ImageIcon size={20} className="text-gray-700 dark:text-gray-300" />
-        <span className="font-semibold text-gray-900 dark:text-gray-100">Branding & Settings</span>
+        <span className="font-semibold text-gray-900 dark:text-gray-100">
+          Branding & Settings
+        </span>
         <ChevronDown
           size={18}
           className={`transform transition ${isOpen ? "rotate-180" : ""} text-gray-700 dark:text-gray-300`}
@@ -81,13 +83,14 @@ export default function BrandingSettings({
         <div className="p-4 space-y-4">
           {/* File Upload */}
           <div className="flex flex-col gap-2">
-            <label className="font-medium text-gray-900 dark:text-gray-100">Upload Logo</label>
+            <label className="font-medium text-gray-900 dark:text-gray-100">
+              Upload Logo
+            </label>
             <label
               htmlFor="file-upload"
               className={`btn btn-outline flex items-center gap-2 cursor-pointer
                 border dark:border-gray-600 text-gray-700 dark:text-gray-300
                 hover:border-gray-700 hover:text-gray-800 dark:hover:border-white dark:hover:text-white`}
-              
             >
               <Upload size={18} /> Upload (SVG)
             </label>
@@ -109,27 +112,33 @@ export default function BrandingSettings({
 
           {/* Border Radius Slider */}
           <div>
-            <label className="font-medium text-gray-900 dark:text-gray-100">Logo Background Border Radius</label>
+            <label className="font-medium text-gray-900 dark:text-gray-100">
+              Logo Background Border Radius
+            </label>
             <CustomSlider
-  min={0}
-  max={30}
-  value={borderRadius}
-  onChange={(newRadius) => {
-    setBorderRadius(newRadius);
-    onBorderRadiusChange(newRadius);
-  }}
-/>
+              min={0}
+              max={30}
+              value={borderRadius}
+              onChange={(newRadius) => {
+                setBorderRadius(newRadius);
+                onBorderRadiusChange(newRadius);
+              }}
+            />
 
-
-            
-            <p className="text-sm text-gray-600 dark:text-gray-400">Radius: {borderRadius}px</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Radius: {borderRadius}px
+            </p>
           </div>
 
           {/* QR Code Color Picker */}
           <div className="flex gap-2 items-center">
             <div className="flex flex-col w-auto">
-              <label className="font-medium text-gray-900 dark:text-gray-100">QR Code Color</label>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Selected: {qrColor}</p>
+              <label className="font-medium text-gray-900 dark:text-gray-100">
+                QR Code Color
+              </label>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Selected: {qrColor}
+              </p>
             </div>
             <input
               type="color"

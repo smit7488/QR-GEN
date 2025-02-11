@@ -35,18 +35,18 @@ export default function CustomSlider({
             {children}
           </div>
         )}
-        renderThumb={({ props }) => (
-          <div
-            {...props}
-            className="w-5 h-5 rounded-full shadow-md cursor-pointer border 
-  border-gray-400 dark:border-gray-100 bg-[var(--slider-thumb-color)] dark:bg-gray-300 
-  shadow-[0px_2px_6px_rgba(0,0,0,0.3)] dark:shadow-[0px_2px_6px_rgba(255,255,255,0.3)]"  
-            style={{
-           
-              boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.3)",
-            }}
-          />
-        )}
+        renderThumb={({ props }) => {
+          const { key, ...restProps } = props; 
+          return (
+            <div
+              key={key} 
+              {...restProps} 
+              className="w-5 h-5 rounded-full shadow-md cursor-pointer border 
+                         border-gray-400 dark:border-gray-100 bg-[var(--slider-thumb-color)] dark:bg-gray-300"
+            />
+          );
+        }}
+
       />
    
     </div>

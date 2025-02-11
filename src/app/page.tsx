@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import QRGenerator from "@/components/QRGenerator";
-import SVGQRCode from "@/components/SVGQRCode";
+import BuildQRCode from "@/components/BuildQRCode";
 import QRHolder from "@/components/QRHolder";
 import Button from "@/components/Button";
 import { Download } from "lucide-react";
@@ -46,94 +46,56 @@ export default function Page() {
   };
 
   const downloadPNG = async () => {
-    if (!qrData) return;
-
     const svgElement = document.getElementById("qr-code");
     if (!svgElement) return;
 
+    // Convert SVG to XML string
     const serializer = new XMLSerializer();
     const svgString = serializer.serializeToString(svgElement);
-    const encodedData = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgString)))}`;
 
+    // Create a Blob from the SVG string
+    const blob = new Blob([svgString], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+
+    // Create an Image element
     const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = encodedData;
+    img.crossOrigin = "anonymous"; // Helps prevent tainted canvas issues
+    img.src = url;
 
     img.onload = () => {
-      setTimeout(() => {
-        const exportScale = 3; // Scale factor for 900x900 PNG
-        const baseSize = 300; // Base QR size in preview
-        const size = baseSize * exportScale; // Scaled size for PNG export
+      const size = 900; // Fixed output size
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
 
-        const canvas = document.createElement("canvas");
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
+      // Fill background with white
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = "white"; // Set white background
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Draw the SVG image onto the canvas
+      ctx.drawImage(img, 0, 0, size, size);
 
-        // Scale up the entire QR code proportionally
-        ctx.drawImage(img, 0, 0, size, size);
+      // Convert to PNG and trigger download
+      const pngUrl = canvas.toDataURL("image/png");
+      const a = document.createElement("a");
+      a.href = pngUrl;
+      a.download = "qrcode.png";
+      a.click();
 
-        if (uploadedSVG) {
-          const logo = new Image();
-          logo.src = uploadedSVG;
-          logo.crossOrigin = "anonymous";
-
-          logo.onload = () => {
-            const logoSize = size * 0.2; // 20% of the QR code size
-            const paddingSize = logoSize * 1.3; // 30% larger for padding
-            const logoX = (size - logoSize) / 2;
-            const logoY = (size - logoSize) / 2;
-
-            // Scale the border radius correctly
-            const scaledBorderRadius = borderRadius * exportScale;
-
-            // Draw background padding
-            ctx.fillStyle = "white";
-            ctx.beginPath();
-            ctx.roundRect(
-              logoX - (paddingSize - logoSize) / 2,
-              logoY - (paddingSize - logoSize) / 2,
-              paddingSize,
-              paddingSize,
-              scaledBorderRadius
-            );
-            ctx.fill();
-
-            // Draw logo
-            ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
-
-            // Convert to PNG and trigger download
-            const pngUrl = canvas.toDataURL("image/png");
-            const a = document.createElement("a");
-            a.href = pngUrl;
-            a.download = "qrcode-900x900.png";
-            a.click();
-          };
-        } else {
-          // Convert to PNG and trigger download if no logo
-          const pngUrl = canvas.toDataURL("image/png");
-          const a = document.createElement("a");
-          a.href = pngUrl;
-          a.download = "qrcode-900x900.png";
-          a.click();
-        }
-      }, 200);
+      // Cleanup URL object
+      URL.revokeObjectURL(url);
     };
 
     img.onerror = (err) => {
-      console.error("Error loading SVG for PNG conversion", err);
+      console.error("Error loading SVG for PNG conversion:", err);
     };
   };
 
   return (
-  
     <div className="min-h-screen">
-      <div className= "gradient w-full fixed">
-        </div>
+      <div className="gradient w-full fixed"></div>
       <Nav />
 
       <div className="min-h-screen flex flex-col items-center p-4">
@@ -152,7 +114,12 @@ export default function Page() {
           <div className="flex flex-col items-center">
             <QRHolder className="bg-gray-300 border-gray-500 dark:bg-gray-900 dark:border-gray-700">
               {isMounted && qrData ? (
-                <SVGQRCode text={qrData} uploadedSVG={uploadedSVG} qrColor={qrColor} borderRadius={borderRadius} />
+                <BuildQRCode
+                  text={qrData}
+                  uploadedSVG={uploadedSVG}
+                  qrColor={qrColor}
+                  borderRadius={borderRadius}
+                />
               ) : null}
             </QRHolder>
 
@@ -161,22 +128,23 @@ export default function Page() {
               <div className="mt-4 flex gap-4">
                 <Button onClick={downloadSVG} variant="primary">
                   <div className="flex gap-2">
-                    <Download size={18} /> <span className="text-sm">Download QR Code (SVG)</span>
+                    <Download size={18} />{" "}
+                    <span className="text-sm">Download QR Code (SVG)</span>
                   </div>
                 </Button>
-                <div className="hidden">
-                <Button onClick={downloadPNG} variant="secondary">
-                  <div className="flex gap-2">
-                    <Download size={18} /> <span className="text-sm">PNG</span>
-                  </div>
-                </Button>
-                  </div>
+                <div>
+                  <Button onClick={downloadPNG} variant="secondary">
+                    <div className="flex gap-2">
+                      <Download size={18} />{" "}
+                      <span className="text-sm">PNG</span>
+                    </div>
+                  </Button>
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
-    
     </div>
   );
 }

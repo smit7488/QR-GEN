@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import Card from "@/components/Card";
 
-interface SVGQRCodeProps {
+interface BuildQRCodeProps {
   text: string;
   uploadedSVG: string | null;
   qrColor: string;
   borderRadius: number;
 }
 
-export default function SVGQRCode({ text, uploadedSVG, qrColor, borderRadius }: SVGQRCodeProps) {
+export default function BuildQRCode({ text, uploadedSVG, qrColor, borderRadius }: BuildQRCodeProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [processedSVG, setProcessedSVG] = useState<string | null>(null);
   const [scaleFactor, setScaleFactor] = useState(1);

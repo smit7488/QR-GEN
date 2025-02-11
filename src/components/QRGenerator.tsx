@@ -14,7 +14,6 @@ import QREvent from "@/components/QRInputs/QREvent";
 import QRLocation from "@/components/QRInputs/QRLocation";
 import QRCrypto from "@/components/QRInputs/QRCrypto";
 
-
 // Import Lucide Icons
 import {
   Globe,
@@ -61,7 +60,6 @@ export default function QRGenerator({
     { type: "event", label: "Event", icon: <Calendar size={18} /> },
     { type: "location", label: "Location", icon: <MapPin size={18} /> },
     { type: "crypto", label: "Crypto", icon: <Bitcoin size={18} /> },
-
   ];
 
   return (
@@ -99,7 +97,6 @@ export default function QRGenerator({
         {qrType === "event" && <QREvent onGenerate={onGenerate} />}
         {qrType === "location" && <QRLocation onGenerate={onGenerate} />}
         {qrType === "crypto" && <QRCrypto onGenerate={onGenerate} />}
-
       </Card>
 
       {/* Branding & Settings Accordion */}
