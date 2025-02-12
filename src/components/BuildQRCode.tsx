@@ -96,6 +96,8 @@ export default function BuildQRCode({
               height={paddingSize}
               rx={borderRadius}
               fill="white"
+              stroke={qrColor}
+              strokeWidth={4}
             />
           )}
 
